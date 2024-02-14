@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40,100;9..40,200;9..40,300;9..40,400&family=Lovers+Quarrel&family=Montserrat:wght@300;400;500&family=Open+Sans:wght@300;400&family=Poppins:wght@100;200;300;400;500;600&family=Share+Tech+Mono&family=Silkscreen&display=swap"
+                                                                                                                                                                                                                                                                   rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+                                                                                                                                                                                                                                                               crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="main-dis">
+        <h1></h1>
+        
+
+        <div class="form-area py-5 px-4 text-white">
+            
+            <form id="loveForm">
+                <legend class="text-center head"> ❤️ Love Calculator ❤️</legend>
+                <div class="mb-3">
+                    <label for="disabledTextInput" class="form-label">Crush name</label>
+                    <input type="text" id="person1" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label for="disabledTextInput" class="form-label">Your Name</label>
+                    <input type="text" id="person2" class="form-control">
+                </div>
+
+                <button type="submit" id='btn' class="btn btn-danger w-100">Calculate Love</button>
+            </form>
+            <h3 id="loveScore" class="text-center"></h3>
+            <h4 class="text-center">love quotes👇</h4>
+            <p id="Qat" class="text-center text-white "></p>
+           
+
+        </div>
+
+
+    </div>
+    <!-- <div class="card"> -->
+
+    <!-- </div> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+                                                                                                                                                                                                                                                                   crossorigin="anonymous"></script>
+
+
+    <script>
+
+        function auto() {
+            var category = 'happiness'
+            const txt = document.getElementById('Qat')
+
+            
+            setInterval(() => {
+                $.ajax({
+                    method: 'GET',
+                    url: 'https://api.api-ninjas.com/v1/quotes?category=' + "love",
+                    headers: { 'X-Api-Key': 'NGY2aM7VHlaakglLlWoXuQ==SeFKRLAsFcAouxix' },
+                    contentType: 'application/json',
+                    success: function (result) {
+                        txt.innerText = result[0].quote
+                        console.log(result[0].quote);
+                    },
+                    error: function ajaxError(jqXHR) {
+                        console.error('Error: ', jqXHR.responseText);
+                    }
+                });
+            }, 5000);
+        }
+        window.onload = auto
+        document.getElementById('loveForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var person1 = document.getElementById('person1').value.toLowerCase();
+            var person2 = document.getElementById('person2').value.toLowerCase();
+            var loveScore = calculateLoveScore(person1, person2);
+            document.getElementById('loveScore').innerText = 'Love Score: ' + loveScore + '%';
+        });
+
+        function calculateLoveScore(person1, person2) {
+            var score = 0;
+            for (var i = 0; i < person1.length; i++) {
+                score += person1.charCodeAt(i);
+            }
+            for (var j = 0; j < person2.length; j++) {
+                score += person2.charCodeAt(j);
+            }
+            score %= 100; // Ensuring score is within 0-99 range
+            console.log(score);
+            return score;
+        }
+
+
+
+
+
+    </script>
+</body>
+
+</html>
